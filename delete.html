@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        var response = "";
+
+        function deleteAccount() {
+            var credentials = new Object();
+            credentials.id = document.getElementById("id").value;                
+            //credentials.username = document.getElementById("username").value;
+            //credentials.password = document.getElementById("password").value;
+
+            var request = new XMLHttpRequest();
+
+            request.open("DELETE", "/delete", true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.onload = function() {
+                response = JSON.parse(request.responseText);
+                document.getElementById("deleteAccount").style.display = "none";
+                document.getElementById("message").textContent = response.message;
+            };
+
+            request.send(JSON.stringify(credentials));
+        }
+    </script>
+
+</head>
+
+<body>
+    <form id="deleteAccount">
+        <label>ID to delete: </label>
+        <input type="text" id="id" name="id">
+        <input type="button" onclick="deleteAccount()" value="delete">
+    </form>
+    <div id="message"></div>
+</body>
+
+</html>
